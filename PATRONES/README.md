@@ -52,6 +52,7 @@ public class FormularioInvoker {
 
 ## Diagrama de secuencia 
 
+![Interaction Sequence diagram](https://github.com/AlexCaboVaz/DSS/assets/79449815/a35b15ff-7724-4580-a26f-ed3b176cf405)
 
 
 ## Patron Decorator
