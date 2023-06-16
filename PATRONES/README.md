@@ -54,6 +54,8 @@ public class FormularioInvoker {
 
 ![Interaction Sequence diagram](https://github.com/AlexCaboVaz/DSS/assets/79449815/a35b15ff-7724-4580-a26f-ed3b176cf405)
 
+- En este diagrama, la empresa crea el formularioPedido, luego el Empleado lo procesa, lo cual lleva a la generación del pedido por parte del almacén, y finalmente el pedido es enviado al almacén.
+
 
 ## Patron Decorator
 
