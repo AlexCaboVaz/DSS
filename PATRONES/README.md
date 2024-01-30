@@ -19,7 +19,8 @@ En el código, se crea una instancia de Formulario y se le asigna un comando esp
 
 ## Diagrama de secuencia 
 
-![Interaction Sequence diagram](https://github.com/AlexCaboVaz/DSS/assets/79449815/a35b15ff-7724-4580-a26f-ed3b176cf405)
+![Interaction Sequence diagram](https://github.com/AlexCaboVaz/DSS/assets/79449815/35db3861-0679-4e8d-a800-dc53456a1e39)
+
 
 - En este diagrama, la empresa crea el formularioPedido, luego el Empleado lo procesa, lo cual lleva a la generación del pedido por parte del almacén, y finalmente el pedido es enviado al almacén.
 
