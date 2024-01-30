@@ -1,53 +1,20 @@
 # PATRONES
 
-## Patron command
+## Parte A: Aplicación del Patrón Command
 
-1. Crear una interfaz FormularioCommand que defina un método ejecutar() para ejecutar la acción correspondiente al formulario.
+- Paso 1: Creación de la Interfaz Command
+En esta parte, se ha aplicado el patrón Command. Aquí están los pasos clave:
 
-```
-public interface FormularioCommand {
-    void ejecutar();
-}
-```
+Creación de la Interfaz Command: Se ha creado la interfaz Command que define un método execute() para ejecutar una acción específica. Esta interfaz actúa como un contrato para todas las clases de comandos que se implementarán.
 
-2. Crear una implementación concreta de FormularioCommand para cada tipo de formulario. Por ejemplo, PedidoAlmacenCommand para el formulario que genera un pedido al almacén.
+- Paso 2: Implementación de Comandos
+Se han implementado clases concretas que representan comandos específicos, como SubmitCommand, SaveCommand, y PrintCommand. Cada clase de comando implementa la interfaz Command y proporciona su propia lógica de ejecución.
 
-```
-public class PedidoAlmacenCommand implements FormularioCommand {
-    private PedidoAlmacen pedidoAlmacen;
+- Paso 3: Creación del Invocador
+Se ha creado una clase llamada Formulario que actúa como el "invocador". Esta clase tiene un método para asignar un comando y otro método para ejecutar el comando. Esto permite que el formulario interactúe con diferentes comandos de manera flexible.
 
-    public PedidoAlmacenCommand(PedidoAlmacen pedidoAlmacen) {
-        this.pedidoAlmacen = pedidoAlmacen;
-    }
-
-    public void ejecutar() {
-        pedidoAlmacen.generarPedido();
-    }
-}
-```
-
-3. Crear una clase FormularioInvoker que invocará el comando correspondiente para cada tipo de formulario.
-
-```
-public class FormularioInvoker {
-    private FormularioCommand command;
-
-    public void setCommand(FormularioCommand command) {
-        this.command = command;
-    }
-
-    public void procesarFormulario() {
-        // Otras operaciones antes del procesamiento del formulario
-
-        // Ejecutar el comando correspondiente
-        command.ejecutar();
-
-        // Otras operaciones después del procesamiento del formulario
-    }
-}
-```
-
-- Con esta implementación, se puede automatizar el procesamiento de diferentes tipos de formularios, generando distintas salidas según el tipo de formulario, sin afectar el resto de la aplicación.
+- Paso 4: Uso del Patrón Command
+En el código, se crea una instancia de Formulario y se le asigna un comando específico. Luego, se ejecuta el comando según sea necesario. Esto permite automatizar diversas acciones en un formulario, como enviar, guardar o imprimir.
 
 
 ## Diagrama de secuencia 
@@ -57,73 +24,24 @@ public class FormularioInvoker {
 - En este diagrama, la empresa crea el formularioPedido, luego el Empleado lo procesa, lo cual lleva a la generación del pedido por parte del almacén, y finalmente el pedido es enviado al almacén.
 
 
-## Patron Decorator
+## Parte C: Uso del Patrón Decorator para Formularios
 
-- Para manejar la visualización de los distintos formularios, se puede utilizar el patrón de diseño Decorator. Este patrón permite agregar responsabilidades adicionales a un objeto de manera dinámica sin afectar al resto del código. En este caso, se puede utilizar el patrón Decorator para añadir características de visualización, como la barra de desplazamiento y los bordes de resaltado, a los formularios.
+En la parte C del ejercicio, se ha propuesto el uso del patrón Decorator para resaltar los formularios en función de diferentes criterios, como importancia y urgencia. A continuación, se describe cómo funciona este enfoque:
 
-1. Crear una interfaz Formulario que represente el formulario base.
+- Paso 1: Creación de la Interfaz Formulario
+Se ha definido una interfaz Formulario que representa un formulario genérico. Esta interfaz incluye un método mostrar() que se utilizará para mostrar el formulario.
 
-```
-public interface Formulario {
-    void mostrar();
-}
-```
+- Paso 2: Implementación de Formularios Concretos
+Se han implementado clases concretas que representan diferentes tipos de formularios, como FormularioPedido, FormularioCompra, y FormularioAviso. Cada formulario implementa la interfaz Formulario y proporciona su propia implementación del método mostrar().
 
-2. Implementar la clase FormularioBase que implemente la interfaz Formulario.
+- Paso 3: Uso del Patrón Decorator
+Se ha aplicado el patrón Decorator para agregar características adicionales a los formularios. Se han creado clases decoradoras como BordeResaltadoDecorator y BarraDesplazamientoDecorator. Cada decorador implementa la interfaz Formulario y tiene un formulario base como componente.
 
-```
-public class FormularioBase implements Formulario {
-    public void mostrar() {
-        // Mostrar el formulario base
-    }
-}
-```
+- Paso 4: Uso de Decoradores
+En el código, se pueden crear instancias de formularios concretos y luego decorarlos según sea necesario. Por ejemplo, se puede crear un formulario de pedido y luego aplicar decoradores para resaltarlos y agregar barras de desplazamiento si es necesario
 
-3. Crear una clase abstracta FormularioDecorator que implemente la interfaz Formulario y tenga una referencia al formulario base.
+## Ejecucion
 
-```
-public abstract class FormularioDecorator implements Formulario {
-    protected Formulario formulario;
-
-    public FormularioDecorator(Formulario formulario) {
-        this.formulario = formulario;
-    }
-
-    public void mostrar() {
-        formulario.mostrar();
-    }
-}
-```
-
-4. Crear clases concretas de decorador que agreguen características adicionales al formulario base, como la barra de desplazamiento y los bordes de resaltado.
-
-```
-public class FormularioConScroll extends FormularioDecorator {
-    public FormularioConScroll(Formulario formulario) {
-        super(formulario);
-    }
-
-    public void mostrar() {
-        // Agregar la barra de desplazamiento al formulario
-        formulario.mostrar();
-    }
-}
-
-public class FormularioConBordeResaltado extends FormularioDecorator {
-    private String color;
-    private int grosor;
-
-    public FormularioConBordeResaltado(Formulario formulario, String color, int grosor) {
-        super(formulario);
-        this.color = color;
-        this.grosor = grosor;
-    }
-
-    public void mostrar() {
-        // Agregar el borde de resaltado al formulario
-        formulario.mostrar();
-    }
-}
-```
-
-- Con este diseño, se puede envolver un formulario con diferentes decoradores para agregar características de visualización adicionales, como la barra de desplazamiento y los bordes de resaltado, sin afectar el resto del código.
+1. Clona o descarga este repositorio en tu máquina local.
+2. Abre el proyecto en tu IDE de preferencia, como IntelliJ IDEA o Eclipse.
+3. Ejecuta desde el Main
