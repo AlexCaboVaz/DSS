@@ -1,83 +1,23 @@
-# Inyeccion de dependencias
+# CABALLEROS
 
-## Rediseño de la interfaz Quest
+## Cambios realizados
 
--  Para rediseñar la interfaz Quest del ejemplo KnightsOfTheRoundTable sin utilizar java.lang.Object como tipo genérico, puedes utilizar una variable de tipo genérico en la interfaz. Aquí tienes un ejemplo de cómo podría verse el rediseño:
+1. Interfaz Quest: Hemos introducido una interfaz llamada Quest que define un método embark() para realizar una búsqueda. Esto permite una mayor flexibilidad en la implementación de diferentes tipos de búsquedas en el futuro.
 
-```
-public interface Quest<T> {
-    T embark() throws QuestFailedException;
-}
-```
+2. Clase HolyGrailQuest implementa Quest: La clase HolyGrailQuest ahora implementa la interfaz Quest. Esto garantiza que cada búsqueda debe proporcionar una implementación de embark().
 
-- Luego, puedes modificar la clase HolyGrailQuest para que implemente la interfaz Quest utilizando el tipo genérico:
+3. Constructor para la búsqueda del Santo Grial: Hemos agregado un constructor para la clase HolyGrailQuest que permite configurar la búsqueda de manera más personalizada si fuera necesario en el futuro.
 
-```
-public class HolyGrailQuest implements Quest<HolyGrail> {
-    public HolyGrailQuest() { /*...*/ }
+## Beneficios de los cambios
 
-    public HolyGrail embark() throws QuestFailedException {
-        HolyGrail grail = null;
-        // Buscar el Grial...
-        return grail;
-    }
-}
-```
+- Los cambios realizados tienen los siguientes beneficios:
 
-- De esta manera, la interfaz Quest y su implementación HolyGrailQuest pueden trabajar con un tipo específico (HolyGrail en este caso) en lugar de utilizar java.lang.Object.
+- Mayor flexibilidad: Ahora es más fácil agregar diferentes tipos de búsquedas implementando la interfaz Quest.
+- Mayor claridad: La separación de responsabilidades entre las clases KnightOfTheRoundTable, HolyGrailQuest y HolyGrail es más clara.
+- Potencial para personalización: La adición del constructor personalizado en HolyGrailQuest permite configurar búsquedas de manera más detallada si fuera necesario.
 
+## Ejecución
 
-## Implementar el ejemplo mediante un framework de inyeccion de dependencias mediante Spring
-
-1. Configuración de Spring: Define los beans necesarios en un archivo de configuración de Spring (por ejemplo, un archivo XML o una clase de configuración anotada).
-
-```
-<!-- Definición del bean HolyGrailQuest -->
-<bean id="holyGrailQuest" class="com.example.HolyGrailQuest" />
-
-<!-- Configuración del bean KnightOfTheRoundTable que utiliza la dependencia HolyGrailQuest -->
-<bean id="knightOfTheRoundTable" class="com.example.KnightOfTheRoundTable">
-    <constructor-arg value="John Doe" />
-    <property name="quest" ref="holyGrailQuest" />
-</bean>
-```
-
-2. Creación de la clase KnightOfTheRoundTable con inyección de dependencias:
-
-```
-public class KnightOfTheRoundTable implements Knight {
-    private String name;
-    private Quest quest;
-
-    public KnightOfTheRoundTable(String name) {
-        this.name = name;
-    }
-
-    public Object embarkOnQuest() throws QuestFailedException {
-        return quest.embark();
-    }
-
-    // Getter y setter para la propiedad 'quest'
-
-    public void setQuest(Quest quest) {
-        this.quest = quest;
-    }
-
-    public Quest getQuest() {
-        return quest;
-    }
-}
-```
-
-- En este ejemplo, la clase KnightOfTheRoundTable tiene una dependencia de la interfaz Quest, que se inyecta a través del método setQuest().
-
-3. Obtener la instancia de KnightOfTheRoundTable desde el contexto de Spring:
-
-```
-ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-KnightOfTheRoundTable knight = context.getBean("knightOfTheRoundTable", KnightOfTheRoundTable.class);
-
-// Utilizar la instancia knight para realizar las operaciones deseadas
-```
-
-- En este punto, puedes obtener una instancia de KnightOfTheRoundTable del contexto de Spring, y todas las dependencias se resolverán automáticamente.
+Clona o descarga este repositorio en tu máquina local.
+Abre el proyecto en tu IDE de preferencia, como IntelliJ IDEA o Eclipse.
+Ejecuta el código desde el main y veras los resultados
